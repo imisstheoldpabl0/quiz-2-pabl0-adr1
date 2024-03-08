@@ -1,0 +1,38 @@
+fieldset {
+    height: 100vh;
+    border: 1px solid red;
+}
+
+label {
+    border: 1px solid blue;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input{
+   display: none;
+}
+
+legend {
+    height: 20%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+/* Medias */
+
+@media only screen and (min-width: 700px) {
+    fieldset {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+    }
+    label {
+        margin: 0 30px;
+        width: 40%;
+        height: 35%;
+    }
+}
