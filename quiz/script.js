@@ -1,3 +1,10 @@
+let partida = 0;
+let datosPartidas = [];
+
+localStorage.setItem(
+    "partidas",
+    JSON.stringify(datosPartidas));
+
 async function quiz() {
     let allData = await fetch("./local.json")
     let data = await allData.json();
@@ -7,6 +14,7 @@ async function quiz() {
     let preguntas = [];
     let respuestas_correctas = [];
     let respuestas = [];
+
 
     for (let i = 0; i < datos.length; i++) {
         preguntas.push(datos[i].question);
@@ -23,14 +31,18 @@ async function quiz() {
     let index = 0;
     let preguntasRespondidas = [];
 
-function final (){
-    document.getElementById("quiz").innerHTML = ``;
-}
-
-
+    function final() {
+        document.getElementById("quiz").innerHTML = `
+            <button id="again"><a href="#">Otra partida</a></button>
+            <button id="grafica"><a href="#">No hago nada</a></button>`
+        document.getElementById("again").addEventListener("click", function () {
+            quiz();
+        });
+    }
 
 
     function pintar(i) {
+
         document.getElementById("quiz").innerHTML = `
             <fieldset>
                 <legend>${preguntas[i]}</legend>
@@ -68,11 +80,30 @@ function final (){
 
                 index++;
 
-                if (preguntasRespondidas.length == preguntas.length){
-                    alert(`Has acertado ${aciertos} de 10`)
+                if (preguntasRespondidas.length == preguntas.length) {
+
+                    partida++;
+
+                    let nuevaPartida = JSON.parse(localStorage.getItem("partidas"));
+                    
+                    nuevaPartida.push({
+                        "partida": partida,
+                        "aciertos": aciertos,
+                        "fecha": Date()
+                    });
+
+                    localStorage.setItem("partidas", JSON.stringify(nuevaPartida));
+
+
+
+
+                    console.log(datosPartidas);
+
+                    // alert(`Has acertado ${aciertos} de 10`)
+
                     final();
                 }
-                else{
+                else {
                     pintar(index);
                 }
             });
@@ -80,4 +111,5 @@ function final (){
     }
     pintar(index);
 }
+
 quiz();
