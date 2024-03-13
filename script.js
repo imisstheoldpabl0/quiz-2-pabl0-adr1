@@ -5,7 +5,9 @@ function welcome() {
     document.querySelector("#quiz").innerHTML = "";
     document.querySelector("#welcome").innerHTML = `
         <section>
-            <h2 id="userLog"></h2>
+        <header>
+        <h1>REGISTRO QUIZ 2</h1>
+            
             <div id="forms-container">
                 <div>
                     <h3>Formulario de Registro</h3>
@@ -16,7 +18,7 @@ function welcome() {
                             <label for="pass">Password:</label><br>
                             <input type="password" id="pass" name="pass" placeholder="Introduce password..."><br>
                             <label for="pass2">Repite password:</label><br>
-                            <input type="password" id="pass2" name="pass2" placeholder="Repite password..."><br><br>
+                            <input type="password" id="pass2" name="pass2" placeholder="Repite password..."><br>
                             <input type="submit" value="Enviar">
                         </div>
                     </form>
@@ -34,11 +36,15 @@ function welcome() {
                         </div>
                     </form>
 
-                </div>
-                <div>
-                    <h3>Logout</h3>
                     <div id="logout">
                         <button id="salir">Logout</button>
+                    </div>
+
+                </div>
+                <div>
+                    <h3>Quiz</h3>
+                    <div id="logout">
+                        <button id="quizButton">Jugar</button>
                     </div>
 
                 </div>
@@ -91,11 +97,13 @@ const signUpUser = (email, password) => {
             createUser({
                 id: user.uid,
                 email: user.email,
+                partidas: datosPartidas,
             });
 
         })
         .catch((error) => {
             console.log("Error en el sistema" + error.message, "Error: " + error.code);
+            alert("Por favor compruebe sus datos y rellene todos los campos.")
         });
 };
 
@@ -110,30 +118,44 @@ document.getElementById("form1").addEventListener("submit", function (event) {
 })
 
 
+// BOTON JUGAR QUIZ
+document.getElementById("quizButton").addEventListener("click", function () {
+    let user = firebase.auth().currentUser;
+    if (user) {
+        quiz();
+    } else {
+        alert("Por favor inicie sesión")
+    }
+
+})
+
+// SIGN-IN
 const signInUser = (email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             // Signed in
             let user = userCredential.user;
             console.log(`se ha logado ${user.email} ID:${user.uid}`)
-            alert(`se ha logado ${user.email} ID:${user.uid}`)
             console.log("USER", user);
-            quiz();
+            //quiz();
         })
         .catch((error) => {
             let errorCode = error.code;
             let errorMessage = error.message;
             console.log(errorCode)
             console.log(errorMessage)
+            alert("No se ha encontrado usuario en el sistema. Compruebe su usuario y contraseña.")
         });
 }
 
+// SIGN-OUT
 const signOut = () => {
     let user = firebase.auth().currentUser;
 
     firebase.auth().signOut().then(() => {
         console.log("Sale del sistema: " + user.email)
-        document.querySelector("#userLog").innerHTML += "Hasta la vista baby";
+        document.querySelector("#userLog").innerHTML += "Te has deslogeado del sistema";
+
     }).catch((error) => {
         console.log("hubo un error: " + error);
     });
@@ -147,6 +169,8 @@ document.getElementById("form2").addEventListener("submit", function (event) {
     signInUser(email, pass)
 })
 
+//añadir elemento nuevo llamado partida a cada usuario
+
 
 document.getElementById("salir").addEventListener("click", signOut);
 
@@ -155,8 +179,10 @@ document.getElementById("salir").addEventListener("click", signOut);
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         console.log(`Está en el sistema:${user.email} ${user.uid}`);
+        document.getElementById("userLog").innerHTML = `${user.email} está en el sistema`;
     } else {
-        console.log("no hay usuarios en el sistema");
+        console.log("No hay usuarios en el sistema");
+        document.getElementById("userLog").innerHTML = `No hay usuarios en el sistema`;
     }
 });
 
@@ -196,6 +222,8 @@ async function quiz() {
     let preguntasRespondidas = [];
 
     function final() {
+        console.log(datosPartidas);
+
         document.getElementById("quiz").innerHTML = `
             <button id="again"><a href="#">Otra partida</a></button>
             <button id="verGrafica"><a href="#">Mostrar gráfica</a></button>
@@ -236,7 +264,9 @@ async function quiz() {
 
         document.getElementById("signOut").addEventListener("click", function () {
             document.querySelector(".ct-chart").innerHTML = "";
+            signOut();
             welcome();
+
         });
     }
 
@@ -294,9 +324,11 @@ async function quiz() {
 
                     localStorage.setItem("partidas", JSON.stringify(nuevaPartida));
 
-                    console.log(datosPartidas);
+                    console.log(nuevaPartida);
 
-                    // alert(`Has acertado ${aciertos} de 10`)
+                    datosPartidas = nuevaPartida;
+
+                    alert(`Has acertado ${aciertos} de 10`)
 
                     final();
                 }
