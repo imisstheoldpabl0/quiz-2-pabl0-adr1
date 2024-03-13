@@ -223,8 +223,8 @@ async function quiz() {
 
     function final() {
         console.log(datosPartidas);
-
-        document.getElementById("quiz").innerHTML = `
+        document.getElementById("quiz").innerHTML = ""
+        document.getElementById("buttons").innerHTML = `
             <button id="again"><a href="#">Otra partida</a></button>
             <button id="verGrafica"><a href="#">Mostrar gráfica</a></button>
             <button id="signOut"><a href="#">Sign Out</a></button>`

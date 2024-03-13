@@ -1,17 +1,40 @@
+* {
+    font-family: 'SFProMedium';
+    color: #2d2d2d;
+
+
+}
+
+body {
+    background-color: rgb(213, 213, 213);
+}
+
+/* FONTS */
+@font-face {
+    font-family: 'SFProBold';
+    src: url('./assets/fonts/SFPRODISPLAYBOLD.OTF');
+}
+@font-face {
+    font-family: 'SFProMedium';
+    src: url('./assets/fonts/SFPRODISPLAYMEDIUM.OTF');
+}
+@font-face {
+    font-family: 'SFProRegular';
+    src: url('./assets/fonts/SFPRODISPLAYREGULAR.OTF');
+}
 
 
 :root {
-    --border-radius: 16px;
+    --border-radius: 48px;
     --inner-border-radius: 8px;
     --padding: 8px;
     --border-color: gray;
-    --button-color: rgb(22, 101, 192);
+    --button-color: rgb(223, 137, 32);
     --button-font-color: white; 
     --buttons_width: 96px;
 }
-* {
-    font-family: Arial, Helvetica, sans-serif;
-}
+
+
 h1, h2, h3, h4 {
     text-align: center;
 }
@@ -57,16 +80,7 @@ input[type="submit"]:hover {
     justify-content: space-around;
     flex-wrap: wrap;
 }
-#album {
-    margin-top: 16px;
-    border: 1px solid var(--border-color);
-    padding: var(--padding);
-    border-radius: var(--border-radius);
-    display:flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap:8px;
-}
+
 #forms-container {
     display: flex;
     justify-content: center;
@@ -115,19 +129,25 @@ input[type="submit"]:hover {
 
 fieldset {
     height: 100vh;
-    border: 1px solid red;
+    border: 0px solid rgb(101, 101, 101);
+
+    label {
+        border: 1px solid blue;
+        border-radius: 48px;
+        height: 25%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        margin-top: 12px;
+        margin-bottom: 24px;
+    }
 }
 
-label {
-    border: 1px solid blue;
-    height: 25%;
+#buttons {
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#quiz > fieldset > input {
-    display: none;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 legend {
@@ -149,5 +169,8 @@ legend {
         margin: 0 30px;
         width: 40%;
         height: 35%;
+        margin-top: 24px;
+        margin-bottom: 24px;
     }
 }
+
