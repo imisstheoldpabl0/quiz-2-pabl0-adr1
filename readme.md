@@ -55,6 +55,3 @@ El Quiz II hace uso de las siguientes tecnologías:
 ## Licencia
 
 Este proyecto está licenciado bajo la Licencia MIT.
-
-
-
