@@ -129,10 +129,11 @@ input[type="submit"]:hover {
 
 fieldset {
     height: 100vh;
-    border: 0px solid rgb(101, 101, 101);
+    border: 2px solid rgb(101, 101, 101);
+    border-radius: 48px;
 
     label {
-        border: 1px solid blue;
+        border: 2px solid rgb(223, 137, 32);
         border-radius: 48px;
         height: 25%;
         display: flex;
@@ -141,6 +142,10 @@ fieldset {
         background-color: transparent;
         margin-top: 12px;
         margin-bottom: 24px;
+    }
+
+    input {
+        display: none;
     }
 }
 
